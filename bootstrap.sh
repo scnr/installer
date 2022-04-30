@@ -162,3 +162,6 @@ handle_failure
 echo -n "Seeding DB..."
 ./bin/scnr_pro_task db:seed 2>> $log 1>> $log
 echo "done."
+
+echo
+echo "Installation log at: $log"
