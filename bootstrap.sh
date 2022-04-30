@@ -31,7 +31,7 @@ handle_failure() {
 
 declare -A osInfo;
 osInfo[/etc/redhat-release]=yum
-osInfo[/etc/SuSE-release]=zyppper
+osInfo[/etc/SuSE-release]=zypper
 osInfo[/etc/debian_version]=apt-get
 
 package_manager=''
@@ -94,7 +94,7 @@ case $package_manager in
     echo "done."
 
     echo -n "Initialising PostgreSQL, please wait..." 2>> $log 1>> $log
-    sudo postgresql-setup --initdb
+    sudo postgresql-setup --initdb 2>> $log 1>> $log
     echo "done."
 
     echo
