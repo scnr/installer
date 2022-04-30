@@ -2,7 +2,7 @@
 
 Installs SCNR on Debian-based, RedHat-based or SuSE Linux distributions.
 
-    curl -sSL https://raw.githubusercontent.com/scnr/install/main/bootstrap.sh | bash
+    curl -sSL https://raw.githubusercontent.com/scnr/install/main/bootstrap.sh > /tmp/i.sh && bash /tmp/i.sh
 
 ## License
 
