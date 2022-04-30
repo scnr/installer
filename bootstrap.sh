@@ -99,7 +99,7 @@ case $package_manager in
 
     echo
     echo -n "Starting PostgreSQL..."
-    sudo systemctl start postgresql.service
+    sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
@@ -125,7 +125,7 @@ case $package_manager in
 
     echo
     echo -n "Starting PostgreSQL..."
-    sudo systemctl start postgresql.service
+    sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
     echo "done."
 
