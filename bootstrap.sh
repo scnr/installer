@@ -131,8 +131,10 @@ echo
 
 cd ~/$scnr_dir_name
 
-sudo service postgresql start 2>> $log 1>> $log
+echo -n "Starting PostgreSQL..."
+sudo service postgresql start
 handle_failure
+echo "done."
 
 user_exists=$(sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='$scnr_pg_user'" 2>> $log)
 
