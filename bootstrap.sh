@@ -142,7 +142,7 @@ else
 fi
 
 echo "Please update the DB configuration for user '$scnr_pg_user'"
-vi .system/scnr-ui-pro/config/database.yml 2>> $log 1>> $log
+vi .system/scnr-ui-pro/config/database.yml
 echo
 echo -n "Creating DB..."
 ./bin/scnr_pro_task db:create 2>> $log 1>> $log
