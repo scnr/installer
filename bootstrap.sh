@@ -124,13 +124,12 @@ echo -n "Installing SCNR, please wait..."
 rm -rf ~/$scnr_dir_name
 tar xf $scnr_package -C ~/
 rm $scnr_package
-echo -n "done: "
-echo ~/$scnr_dir_name
+echo -n "done."
 
 echo
 
 cd ~/$scnr_dir_name
-
+echo
 echo -n "Starting PostgreSQL..."
 sudo service postgresql start
 handle_failure
@@ -164,4 +163,6 @@ echo -n "Seeding DB..."
 echo "done."
 
 echo
+echo -n "SCNR installed at:   "
+echo ~/$scnr_dir_name
 echo "Installation log at: $log"
