@@ -65,6 +65,13 @@ case $package_manager in
     sudo apt-get -y install postgresql 2>> $log 1>> $log
     handle_failure
     echo "done."
+
+    echo
+    echo -n "Starting PostgreSQL..."
+    sudo service postgresql start
+    handle_failure
+    echo "done."
+
     ;;
 
   yum)
@@ -86,8 +93,14 @@ case $package_manager in
     handle_failure
     echo "done."
 
-    echo -n "Initialising PostgreSQL, please wait..."
+    echo -n "Initialising PostgreSQL, please wait..." 2>> $log 1>> $log
     sudo postgresql-setup --initdb
+    echo "done."
+
+    echo
+    echo -n "Starting PostgreSQL..."
+    sudo systemctl start postgresql.service
+    handle_failure
     echo "done."
     ;;
 
@@ -109,6 +122,13 @@ case $package_manager in
     sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses postgresql-server 2>> $log 1>> $log
     handle_failure
     echo "done."
+
+    echo
+    echo -n "Starting PostgreSQL..."
+    sudo systemctl start postgresql.service
+    handle_failure
+    echo "done."
+
     ;;
 
   *)
@@ -133,11 +153,6 @@ echo -n "done."
 echo
 
 cd ~/$scnr_dir_name
-echo
-echo -n "Starting PostgreSQL..."
-sudo service postgresql start
-handle_failure
-echo "done."
 
 user_exists=$(sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='$scnr_pg_user'" 2>> $log)
 
