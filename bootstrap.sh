@@ -31,7 +31,7 @@ handle_failure() {
 
 declare -A osInfo;
 osInfo[/etc/redhat-release]=yum
-osInfo[/etc/SuSE-release]=zypper
+osInfo[/etc/zypp/zypper.conf]=zypper
 osInfo[/etc/debian_version]=apt-get
 
 package_manager=''
