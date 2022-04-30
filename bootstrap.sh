@@ -66,7 +66,6 @@ case $package_manager in
     handle_failure
     echo "done."
 
-    echo
     echo -n "Starting PostgreSQL..."
     sudo service postgresql start
     handle_failure
@@ -93,11 +92,10 @@ case $package_manager in
     handle_failure
     echo "done."
 
-    echo -n "Initialising PostgreSQL, please wait..." 2>> $log 1>> $log
+    echo -n "Initialising PostgreSQL, please wait..."
     sudo postgresql-setup --initdb 2>> $log 1>> $log
     echo "done."
 
-    echo
     echo -n "Starting PostgreSQL..."
     sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
@@ -123,7 +121,6 @@ case $package_manager in
     handle_failure
     echo "done."
 
-    echo
     echo -n "Starting PostgreSQL..."
     sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
