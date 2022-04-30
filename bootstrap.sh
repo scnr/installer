@@ -9,11 +9,10 @@ cat<<EOF
 
 EOF
 
-scnr_dir_name="scnr-1.0dev-1.0dev-1.0dev"
+scnr_dir=~/scnr-1.0dev-1.0dev-1.0dev
 scnr_url="https://downloads.ecsypno.com/scnr-1.0dev-1.0dev-1.0dev-linux-x86_64.tar.gz"
 scnr_package="/tmp/scnr.tar.gz"
-scnr_pg_user="scnr-pro"
-
+scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 log=~/scnr.install.log
 
 #
@@ -44,60 +43,36 @@ done
 
 chrome_package="/tmp/google-chrome."
 
+echo "(1/3) Google Chrome"
 case $package_manager in
   apt-get)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     chrome_package="${chrome_package}deb"
 
-    echo -n "Downloading Google Chrome, please wait..."
+    echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
     echo "done."
 
-    echo -n "Installing Google Chrome, please wait..."
+    echo -n "   * Installing..."
     sudo apt-get update 2>> $log 1>> $log
     handle_failure
     sudo apt-get -y install $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
-
-    echo -n "Installing PostgreSQL, please wait..."
-    sudo apt-get -y install postgresql 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "Starting PostgreSQL..."
-    sudo service postgresql start
-    handle_failure
-    echo "done."
-
     ;;
 
   yum)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
-    echo -n "Downloading Google Chrome, please wait..."
+    echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
     echo "done."
 
-    echo -n "Installing Google Chrome, please wait..."
+    echo -n "   * Installing..."
     sudo yum -y install $chrome_package 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "Installing PostgreSQL, please wait..."
-    sudo yum -y install postgresql-server 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "Initialising PostgreSQL, please wait..."
-    sudo postgresql-setup --initdb 2>> $log 1>> $log
-    echo "done."
-
-    echo -n "Starting PostgreSQL..."
-    sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
@@ -106,26 +81,15 @@ case $package_manager in
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
-    echo -n "Downloading Google Chrome, please wait..."
+    echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
     echo "done."
 
-    echo -n "Installing Google Chrome, please wait..."
+    echo -n "   * Installing..."
     sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
-
-    echo -n "Installing PostgreSQL, please wait..."
-    sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses postgresql-server 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "Starting PostgreSQL..."
-    sudo systemctl start postgresql.service 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
     ;;
 
   *)
@@ -134,51 +98,52 @@ case $package_manager in
     ;;
 esac
 
+echo
+
 rm $chrome_package
 
-echo -n "Downloading SCNR, please wait..."
+echo "(2/3) SCNR"
+
+echo -n "   * Downloading..."
 curl -s $scnr_url > $scnr_package
 handle_failure
 echo "done."
 
-echo -n "Installing SCNR, please wait..."
-rm -rf ~/$scnr_dir_name
+echo -n "   * Installing..."
+rm -rf $scnr_dir
 tar xf $scnr_package -C ~/
 rm $scnr_package
 echo -n "done."
 
 echo
 
-cd ~/$scnr_dir_name
+cd $scnr_dir
 
-user_exists=$(sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='$scnr_pg_user'" 2>> $log)
-
-if [ $user_exists -eq 1 ]; then
-    echo "PostgeSQL user '$scnr_pg_user' already exists."
-else
-    echo "Creating PostgeSQL user '$scnr_pg_user', please enter and remember the password."
-    sudo -u postgres createuser -s $scnr_pg_user -P
-    handle_failure
-fi
-
-xdg-open .system/scnr-ui-pro/config/database.yml
-read -p "Please update the DB configuration for user '$scnr_pg_user' and press enter to continue..."
 echo
-echo -n "Creating DB..."
-./bin/scnr_pro_task db:create 2>> $log 1>> $log
-handle_failure
-echo "done."
+read -p "(3/3) Setup DB for Pro WebUI now? (y/N): " setup_now
 
-echo -n "Migrating DB..."
-./bin/scnr_pro_task db:migrate 2>> $log 1>> $log
-echo "done."
-handle_failure
+if [ "$setup_now" = "y" ]; then
+    xdg-open $scnr_db_config
+    read -p "   * Please update the DB configuration and press enter to continue..."
+    echo -n "   * Setting up the DB..."
+    ./bin/scnr_pro_task db:create db:migrate 2>> $log 1>> $log
 
-echo -n "Seeding DB..."
-./bin/scnr_pro_task db:seed 2>> $log 1>> $log
-echo "done."
+    if [ $? != 0 ]; then
+        echo "failed, check log for details."
+    else
+        # This can fail if the DB has already been seeded but it's non an issue.
+        ./bin/scnr_pro_task db:seed 2>> $log 1>> $log
+        echo "done."
+    fi
+
+else
+    echo "  * You can edit the DB config file later:"
+    echo "      $scnr_db_config"
+    echo "  * Then issue:"
+    echo "      $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
+fi
 
 echo
 echo -n "SCNR installed at:   "
-echo ~/$scnr_dir_name
+echo $scnr_dir
 echo "Installation log at: $log"
