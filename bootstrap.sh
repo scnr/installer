@@ -85,6 +85,10 @@ case $package_manager in
     sudo yum -y install postgresql-server 2>> $log 1>> $log
     handle_failure
     echo "done."
+
+    echo -n "Initialising PostgreSQL, please wait..."
+    sudo postgresql-setup --initdb
+    echo "done."
     ;;
 
   zypper)
