@@ -82,7 +82,7 @@ case $package_manager in
     echo "done."
 
     echo -n "Installing PostgreSQL, please wait..."
-    sudo yum -y install postgresql 2>> $log 1>> $log
+    sudo yum -y install postgresql-server 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
