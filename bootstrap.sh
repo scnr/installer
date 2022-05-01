@@ -29,10 +29,10 @@ handle_failure() {
 }
 
 print_db_config_info() {
-    echo "  * You can edit the DB config file later:"
-    echo "      $scnr_db_config"
-    echo "  * Then issue:"
-    echo "      $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
+    echo "   * You can edit the DB config file later:"
+    echo "       $scnr_db_config"
+    echo "   * Then issue:"
+    echo "       $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
 }
 
 declare -A osInfo;
