@@ -28,6 +28,13 @@ handle_failure() {
     fi
 }
 
+print_db_config_info() {
+    echo "  * You can edit the DB config file later:"
+    echo "      $scnr_db_config"
+    echo "  * Then issue:"
+    echo "      $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
+}
+
 declare -A osInfo;
 osInfo[/etc/redhat-release]=yum
 osInfo[/etc/zypp/zypper.conf]=zypper
@@ -169,6 +176,7 @@ if [ "$setup_now" = "y" ]; then
 
     if [ $? != 0 ]; then
         echo "failed, check log for details."
+        print_db_config_info
     else
         # This can fail if the DB has already been seeded but it's non an issue.
         ./bin/scnr_pro_task db:seed 2>> $log 1>> $log
@@ -176,10 +184,7 @@ if [ "$setup_now" = "y" ]; then
     fi
 
 else
-    echo "  * You can edit the DB config file later:"
-    echo "      $scnr_db_config"
-    echo "  * Then issue:"
-    echo "      $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
+    print_db_config_info
 fi
 
 echo
