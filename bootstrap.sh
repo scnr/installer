@@ -43,12 +43,12 @@ done
 
 chrome_package="/tmp/google-chrome."
 
-echo "(1/3) Google Chrome"
 case $package_manager in
   apt-get)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     chrome_package="${chrome_package}deb"
 
+    echo "(1/4) Google Chrome"
     echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
@@ -60,12 +60,24 @@ case $package_manager in
     sudo apt-get -y install $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
+    echo
+    echo "(1/4) PostgreSQL"
+    echo -n "   * Installing..."
+    sudo apt-get -y install postgresql 2>> $log 1>> $log
+    handle_failure
+    echo "done."
+
+    echo -n "   * Starting..."
+    sudo service postgresql start
+    handle_failure
+    echo "done."
     ;;
 
   yum)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
+    echo "(1/4) Google Chrome"
     echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
@@ -75,12 +87,28 @@ case $package_manager in
     sudo yum -y install $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
+    echo
+    echo "(1/4) PostgreSQL"
+    echo -n "   * Installing..."
+    sudo yum -y install postgresql-server 2>> $log 1>> $log
+    handle_failure
+    echo "done."
+
+    echo -n "   * Initialising..."
+    sudo postgresql-setup --initdb 2>> $log 1>> $log
+    echo "done."
+
+    echo -n "   * Starting..."
+    sudo systemctl start postgresql.service 2>> $log 1>> $log
+    handle_failure
+    echo "done."
     ;;
 
   zypper)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
+    echo "(1/4) Google Chrome"
     echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
@@ -88,6 +116,17 @@ case $package_manager in
 
     echo -n "   * Installing..."
     sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses $chrome_package 2>> $log 1>> $log
+    handle_failure
+    echo "done."
+    echo
+    echo "(1/4) PostgreSQL"
+    echo -n "   * Installing..."
+    sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses postgresql-server 2>> $log 1>> $log
+    handle_failure
+    echo "done."
+
+    echo -n "   * Starting..."
+    sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
@@ -102,7 +141,7 @@ echo
 
 rm $chrome_package
 
-echo "(2/3) SCNR"
+echo "(3/4) SCNR"
 
 echo -n "   * Downloading..."
 curl -s $scnr_url > $scnr_package
@@ -120,7 +159,7 @@ echo
 cd $scnr_dir
 
 echo
-read -p "(3/3) Setup DB for Pro WebUI now? (y/N): " setup_now
+read -p "(4/4) Setup DB for Pro WebUI now? (y/N): " setup_now
 
 if [ "$setup_now" = "y" ]; then
     xdg-open $scnr_db_config
