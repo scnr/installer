@@ -1,6 +1,7 @@
 # SCNR Installer
 
-Installs SCNR on Debian-based, RedHat-based or SuSE Linux distributions.
+Installs [SCNR](https://ecsypno.com/scnr-documentation/) on Debian-based, 
+RedHat-based or SuSE Linux distributions.
 
 To install run the following command in a terminal of your choice:
 
