@@ -156,14 +156,14 @@ handle_failure
 echo "done."
 
 echo -n "   * Installing..."
-rm -rf $scnr_dir
+rm -rf "$scnr_dir"
 tar xf $scnr_package -C ~/
 rm $scnr_package
 echo -n "done."
 
 echo
 
-cd $scnr_dir
+cd "$scnr_dir"
 
 echo
 read -p "(4/4) Setup DB for Pro WebUI now? (y/N): " setup_now
