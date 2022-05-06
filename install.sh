@@ -37,6 +37,13 @@ print_db_config_info() {
     echo "       $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
 }
 
+# In case of Docker or already being root.
+if (( UID == 0 )); then
+    sudo=""
+else
+    sudo="sudo"
+fi
+
 scnr_dir=~/scnr-1.0dev-1.0dev-1.0dev
 scnr_url="https://downloads.ecsypno.com/scnr-1.0dev-1.0dev-1.0dev-$(operating_system)-$(architecture).tar.gz"
 scnr_package="/tmp/scnr.tar.gz"
@@ -75,9 +82,9 @@ case $package_manager in
     echo "done."
 
     echo -n "   * Installing..."
-    sudo apt-get update 2>> $log 1>> $log
+    $sudo apt-get update 2>> $log 1>> $log
     handle_failure
-    sudo apt-get -y install $chrome_package 2>> $log 1>> $log
+    $sudo apt-get -y install $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
     rm $chrome_package
@@ -85,12 +92,12 @@ case $package_manager in
     echo
     echo "(2/4) PostgreSQL"
     echo -n "   * Installing..."
-    sudo apt-get -y install postgresql 2>> $log 1>> $log
+    $sudo apt-get -y install postgresql 2>> $log 1>> $log
     handle_failure
     echo "done."
 
     echo -n "   * Starting..."
-    sudo service postgresql start
+    $sudo service postgresql start
     handle_failure
     echo "done."
     ;;
@@ -106,7 +113,7 @@ case $package_manager in
     echo "done."
 
     echo -n "   * Installing..."
-    sudo yum -y install $chrome_package 2>> $log 1>> $log
+    $sudo yum -y install $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
     rm $chrome_package
@@ -114,16 +121,16 @@ case $package_manager in
     echo
     echo "(2/4) PostgreSQL"
     echo -n "   * Installing..."
-    sudo yum -y install postgresql-server 2>> $log 1>> $log
+    $sudo yum -y install postgresql-server 2>> $log 1>> $log
     handle_failure
     echo "done."
 
     echo -n "   * Initialising..."
-    sudo postgresql-setup --initdb 2>> $log 1>> $log
+    $sudo postgresql-setup --initdb 2>> $log 1>> $log
     echo "done."
 
     echo -n "   * Starting..."
-    sudo systemctl start postgresql.service 2>> $log 1>> $log
+    $sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
@@ -139,7 +146,7 @@ case $package_manager in
     echo "done."
 
     echo -n "   * Installing..."
-    sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses $chrome_package 2>> $log 1>> $log
+    $sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
     rm $chrome_package
@@ -147,12 +154,12 @@ case $package_manager in
     echo
     echo "(2/4) PostgreSQL"
     echo -n "   * Installing..."
-    sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses postgresql-server 2>> $log 1>> $log
+    $sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses postgresql-server 2>> $log 1>> $log
     handle_failure
     echo "done."
 
     echo -n "   * Starting..."
-    sudo systemctl start postgresql.service 2>> $log 1>> $log
+    $sudo systemctl start postgresql.service 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
