@@ -1,7 +1,7 @@
 # SCNR Installer
 
-Installs [SCNR](https://ecsypno.com/scnr-documentation/) on Mac OS X, Debian-based, 
-RedHat-based or SuSE Linux distributions.
+Installs [SCNR](https://ecsypno.com/scnr-documentation/) on Mac OS X (>= 12.3.1),
+Debian-based, RedHat-based or SuSE Linux distributions.
 
 To install run the following command in a terminal of your choice:
 

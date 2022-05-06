@@ -37,6 +37,20 @@ print_db_config_info() {
     echo "       $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
 }
 
+version() {
+    echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }';
+}
+
+if [[ "$(operating_system)" == "darwin" ]]; then
+    osx_supported_min="12.3.1"
+    osx_current=$(sw_vers -productVersion)
+
+    if [ $(version $osx_current) -lt $(version $osx_supported_min) ]; then
+        echo "OS X version $osx_current is not supported, supported versions are >= $osx_supported_min."
+        exit 1
+    fi
+fi
+
 # In case of Docker or already being root.
 if (( UID == 0 )); then
     sudo=""
