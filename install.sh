@@ -202,32 +202,40 @@ echo
 cd "$scnr_dir"
 
 echo
-read -p "(4/4) Setup DB for Pro WebUI now? (y/N): " setup_now
 
-if [ "$setup_now" = "y" ]; then
+if [[ -t 0 ]]; then
+    read -p "(4/4) Setup DB for Pro WebUI now? (y/N): " setup_now
 
-    if [ $(operating_system) = "darwin" ]; then
-        open $scnr_db_config
+    if [ "$setup_now" = "y" ]; then
+
+        if [ $(operating_system) = "darwin" ]; then
+            open $scnr_db_config
+        else
+            xdg-open $scnr_db_config
+        fi
+
+        read -p "   * Please update the DB configuration and press enter to continue..."
+        echo -n "   * Setting up the DB..."
+        ./bin/scnr_pro_task db:create db:migrate 2>> $log 1>> $log
+
+        if [ $? != 0 ]; then
+            echo "failed, check log for details."
+            print_db_config_info
+        else
+            # This can fail if the DB has already been seeded but it's not an issue.
+            ./bin/scnr_pro_task db:seed 2>> $log 1>> $log
+            echo "done."
+        fi
+
     else
-        xdg-open $scnr_db_config
-    fi
-
-    read -p "   * Please update the DB configuration and press enter to continue..."
-    echo -n "   * Setting up the DB..."
-    ./bin/scnr_pro_task db:create db:migrate 2>> $log 1>> $log
-
-    if [ $? != 0 ]; then
-        echo "failed, check log for details."
         print_db_config_info
-    else
-        # This can fail if the DB has already been seeded but it's non an issue.
-        ./bin/scnr_pro_task db:seed 2>> $log 1>> $log
-        echo "done."
     fi
 
 else
+    echo "(4/4) Shell is non-interactive, skipping DB setup."
     print_db_config_info
 fi
+
 
 echo
 echo -n "SCNR installed at:   "
