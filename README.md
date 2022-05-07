@@ -6,7 +6,7 @@ Debian-based, RedHat-based or SuSE Linux distributions.
 To install run the following command in a terminal of your choice:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/scnr/installer/main/install.sh > /tmp/i.sh && bash /tmp/i.sh
+bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/main/install.sh)"
 ```
 
 It will also install:
