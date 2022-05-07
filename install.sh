@@ -181,8 +181,11 @@ case $package_manager in
   brew)
 
     # Keep the stage counter even, heh...
-    echo "(1/4) Initializing...done."
-    echo
+    echo "(1/4) curl"
+    echo -n "   * Installing..."
+    brew install curl 2>> $log 1>> $log
+    handle_failure
+    echo "done."
 
     echo "(2/4) PostgreSQL"
     echo -n "   * Installing..."
