@@ -186,7 +186,7 @@ case $package_manager in
     brew install curl 2>> $log 1>> $log
     handle_failure
     echo "done."
-
+    echo
     echo "(2/4) PostgreSQL"
     echo -n "   * Installing..."
     brew install postgresql 2>> $log 1>> $log
