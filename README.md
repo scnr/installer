@@ -42,6 +42,14 @@ correct configuration of credentials has taken place:
 bin/scnr_pro_task db:create db:migrate db:seed
 ```
 
+## Manual installation
+
+1. Download the [package](https://downloads.ecsypno.com/) for your OS.
+2. Extract.
+3. Install [PostgreSQL](https://www.postgresql.org/) for _Pro_ if you wish to use it.
+   1. Create a DB role for _Pro_.
+   2. Edit: `.system/scnr-ui-pro/config/database.yml`
+   3. `bin/scnr_pro_task db:create db:migrate db:seed`
 
 ## License
 
