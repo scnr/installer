@@ -42,7 +42,7 @@ version() {
 }
 
 if [[ "$(operating_system)" == "darwin" ]]; then
-    osx_supported_min="12.3.1"
+    osx_supported_min="10.15.7"
     osx_current=$(sw_vers -productVersion)
 
     if [ $(version $osx_current) -lt $(version $osx_supported_min) ]; then
