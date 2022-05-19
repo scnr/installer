@@ -30,13 +30,6 @@ architecture(){
     uname -m
 }
 
-print_db_config_info() {
-    echo "   * You can edit the DB config file later:"
-    echo "       $scnr_db_config"
-    echo "   * Then issue:"
-    echo "       $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed"
-}
-
 version() {
     echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }';
 }
@@ -89,7 +82,7 @@ case $package_manager in
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     chrome_package="${chrome_package}deb"
 
-    echo "(1/4) Google Chrome"
+    echo "(1/2) Google Chrome"
     echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
@@ -102,25 +95,13 @@ case $package_manager in
     handle_failure
     echo "done."
     rm $chrome_package
-
-    echo
-    echo "(2/4) PostgreSQL"
-    echo -n "   * Installing..."
-    $sudo apt-get -y install postgresql 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "   * Starting..."
-    $sudo service postgresql start
-    handle_failure
-    echo "done."
     ;;
 
   yum)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
-    echo "(1/4) Google Chrome"
+    echo "(1/2) Google Chrome"
     echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
@@ -131,29 +112,13 @@ case $package_manager in
     handle_failure
     echo "done."
     rm $chrome_package
-
-    echo
-    echo "(2/4) PostgreSQL"
-    echo -n "   * Installing..."
-    $sudo yum -y install postgresql-server 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "   * Initialising..."
-    $sudo postgresql-setup --initdb 2>> $log 1>> $log
-    echo "done."
-
-    echo -n "   * Starting..."
-    $sudo systemctl start postgresql.service 2>> $log 1>> $log
-    handle_failure
-    echo "done."
     ;;
 
   zypper)
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
-    echo "(1/4) Google Chrome"
+    echo "(1/2) Google Chrome"
     echo -n "   * Downloading..."
     curl -s $chrome_url > $chrome_package
     handle_failure
@@ -164,52 +129,30 @@ case $package_manager in
     handle_failure
     echo "done."
     rm $chrome_package
-
-    echo
-    echo "(2/4) PostgreSQL"
-    echo -n "   * Installing..."
-    $sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses postgresql-server 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "   * Starting..."
-    $sudo systemctl start postgresql.service 2>> $log 1>> $log
-    handle_failure
-    echo "done."
     ;;
 
   brew)
 
-    # Keep the stage counter even, heh...
-    echo "(1/4) curl"
+    echo "(1/2) curl"
     echo -n "   * Installing..."
     brew install curl 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-    echo
-    echo "(2/4) PostgreSQL"
-    echo -n "   * Installing..."
-    brew install postgresql 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-
-    echo -n "   * Starting..."
-    brew services start postgresql 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
 esac
 
 echo
-echo "(3/4) SCNR"
+echo "(2/2) SCNR"
 
 echo -n "   * Downloading..."
 curl -s $scnr_url > $scnr_package
 handle_failure
 echo "done."
 
+rm -rf "$scnr_dir.bak"
+mv "$scnr_dir" "$scnr_dir.bak" 2>> $log 1>> $log
+
 echo -n "   * Installing..."
-rm -rf "$scnr_dir"
 tar xf $scnr_package -C ~/
 rm $scnr_package
 echo -n "done."
@@ -219,41 +162,6 @@ echo
 cd "$scnr_dir"
 
 echo
-
-if [[ -t 0 ]]; then
-    read -p "(4/4) Setup DB for Pro WebUI now? (y/N): " setup_now
-
-    if [ "$setup_now" = "y" ]; then
-
-        if [ $(operating_system) = "darwin" ]; then
-            open $scnr_db_config
-        else
-            xdg-open $scnr_db_config
-        fi
-
-        read -p "   * Please update the DB configuration and press enter to continue..."
-        echo -n "   * Setting up the DB..."
-        ./bin/scnr_pro_task db:create db:migrate 2>> $log 1>> $log
-
-        if [ $? != 0 ]; then
-            echo "failed, check log for details."
-            print_db_config_info
-        else
-            # This can fail if the DB has already been seeded but it's not an issue.
-            ./bin/scnr_pro_task db:seed 2>> $log 1>> $log
-            echo "done."
-        fi
-
-    else
-        print_db_config_info
-    fi
-
-else
-    echo "(4/4) Shell is non-interactive, skipping DB setup."
-    print_db_config_info
-fi
-
-
 echo
 echo -n "SCNR installed at:   "
 echo $scnr_dir
