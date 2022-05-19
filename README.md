@@ -18,10 +18,6 @@ It will also install:
 * OS X
   * [curl](https://curl.se/) -- For the _Engine_.
 
-```
-bin/scnr_pro_task db:create db:migrate db:seed
-```
-
 ## Manual installation
 
 1. Download the [package](https://downloads.ecsypno.com/) for your OS.
