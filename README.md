@@ -27,6 +27,22 @@ It will also install:
    2. OSX
       1. If you encounter a `libcurl` error please install it.
 
+### SCNR Pro
+
+If you'd like to use SCNR Pro, its database will need to be prepared.
+
+#### Setup
+
+If this is a fresh installation, you can setup a DB with:
+
+    ./bin/scnr_pro_task db:create db:migrate db:seed
+
+#### Update
+
+If you'd like to update an existing installation you can do it with:
+
+    ./bin/scnr_pro_task db:migrate
+
 ## License
 
 Copyright [Ecsypno](https://ecsypno.com/). 

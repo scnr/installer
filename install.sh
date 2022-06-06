@@ -155,11 +155,20 @@ mv "$scnr_dir" "$scnr_dir.bak" 2>> $log 1>> $log
 echo -n "   * Installing..."
 tar xf $scnr_package -C ~/
 rm $scnr_package
-echo -n "done."
+echo "done."
 
-echo
+db="$HOME/.scnr/pro/db/production.sqlite3"
 
-cd "$scnr_dir"
+if [[ -f "$db" ]]; then
+    echo -n "   * Updating the DB..."
+    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
+    handle_failure
+else
+    echo -n "   * Setting up the DB..."
+    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
+    handle_failure
+fi
+echo "done."
 
 echo
 echo
