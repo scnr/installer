@@ -46,7 +46,7 @@ print_eula() {
 EOF
 
 agree=""
-read -p "Input \"I AGREE\" key to accept: " agree
+read -p "Input \"I AGREE\" to accept: " agree
 
 if [[ "$agree" != "I AGREE" ]]; then
   exit
@@ -74,7 +74,7 @@ else
     sudo="sudo"
 fi
 
-scnr_dir=~/scnr-1.0dev-1.0dev-1.0dev
+scnr_dir="$HOME/scnr-1.0dev-1.0dev-1.0dev"
 scnr_url="https://downloads.ecsypno.com/scnr-1.0dev-1.0dev-1.0dev-$(operating_system)-$(architecture).tar.gz"
 scnr_package="/tmp/scnr.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
