@@ -34,6 +34,29 @@ version() {
     echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }';
 }
 
+print_eula() {
+    cat<<EOF
+
+  Copyright 2022 Tasos Laskos <tasos.laskos@gmail.com>.
+  ALL rights reserved.
+
+  This software is provided "AS IS" and purely for demonstration/evaluation purposes
+  and is by no means to be used for commercial or harmful actions.
+
+EOF
+
+agree=""
+read -p "Input \"I AGREE\" key to accept: " agree
+
+if [[ "$agree" != "I AGREE" ]]; then
+  exit
+fi
+
+echo
+}
+
+print_eula
+
 if [[ "$(operating_system)" == "darwin" ]]; then
     osx_supported_min="10.15.7"
     osx_current=$(sw_vers -productVersion)
