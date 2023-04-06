@@ -20,9 +20,9 @@ to resolve its dependencies for the _Engine_.
 2. Extract.
 3. Install [Google Chrome](https://www.google.com/chrome/) to resolve its dependencies.
 
-### SCNR Pro
+### SCNR WebUI
 
-If you'd like to use SCNR Pro, its database will need to be prepared.
+If you'd like to use SCNR WebUI, its database will need to be prepared.
 
 #### Setup
 
