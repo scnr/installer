@@ -37,11 +37,13 @@ version() {
 print_eula() {
     cat<<EOF
 
-  Copyright 2022 Tasos Laskos <tasos.laskos@gmail.com>.
+  Copyright 2023 Tasos Laskos <tasos.laskos@gmail.com>.
   ALL rights reserved.
 
   This software is provided "AS IS" and purely for demonstration/evaluation purposes
   and is by no means to be used for commercial or harmful actions.
+
+  Reverse engineering of this software is strictly prohibited!
 
 EOF
 
