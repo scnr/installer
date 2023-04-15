@@ -38,5 +38,6 @@ If you'd like to update an existing installation you can do it with:
 
 ## License
 
-Copyright [Ecsypno](https://ecsypno.com/). 
+Copyright 2023 [Ecsypno Single Member P.C.](https://ecsypno.com/).
+
 All rights reserved.
