@@ -76,11 +76,13 @@ else
     sudo="sudo"
 fi
 
-scnr_dir="$HOME/scnr-1.0dev-1.0dev-1.0dev"
-scnr_url="https://downloads.ecsypno.com/scnr-1.0dev-1.0dev-1.0dev-$(operating_system)-$(architecture).tar.gz"
-scnr_package="/tmp/scnr.tar.gz"
+latest_release=$(curl -sS https://downloads.ecsypno.com/scnr/LATEST_RELEASE)
+
+scnr_dir="./$latest_release"
+scnr_url="https://downloads.ecsypno.com/scnr/scnr-latest-$(operating_system)-$(architecture).tar.gz"
+scnr_package="/tmp/$latest_release.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
-log=~/scnr.install.log
+log=./scnr.install.log
 
 yum_cmd=$(which yum)
 apt_get_cmd=$(which apt-get)
@@ -109,7 +111,7 @@ case $package_manager in
 
     echo "(1/2) Google Chrome"
     echo -n "   * Downloading..."
-    curl -s $chrome_url > $chrome_package
+    curl -so $chrome_package $chrome_url
     handle_failure
     echo "done."
 
@@ -128,7 +130,7 @@ case $package_manager in
 
     echo "(1/2) Google Chrome"
     echo -n "   * Downloading..."
-    curl -s $chrome_url > $chrome_package
+    curl -so $chrome_package $chrome_url
     handle_failure
     echo "done."
 
@@ -145,7 +147,7 @@ case $package_manager in
 
     echo "(1/2) Google Chrome"
     echo -n "   * Downloading..."
-    curl -s $chrome_url > $chrome_package
+    curl -so $chrome_package $chrome_url
     handle_failure
     echo "done."
 
@@ -170,15 +172,14 @@ echo
 echo "(2/2) SCNR"
 
 echo -n "   * Downloading..."
-curl -s $scnr_url > $scnr_package
+curl -so $scnr_package $scnr_url
 handle_failure
 echo "done."
 
-rm -rf "$scnr_dir.bak"
-mv "$scnr_dir" "$scnr_dir.bak" 2>> $log 1>> $log
-
 echo -n "   * Installing..."
-tar xf $scnr_package -C ~/
+mkdir $scnr_dir
+tar xf $scnr_package -C $scnr_dir
+handle_failure
 rm $scnr_package
 echo "done."
 
@@ -186,11 +187,11 @@ db="$HOME/.scnr/pro/db/production.sqlite3"
 
 if [[ -f "$db" ]]; then
     echo -n "   * Updating the DB..."
-    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
+    $scnr_dir/scnr-*/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
     handle_failure
 else
     echo -n "   * Setting up the DB..."
-    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
+    $scnr_dir/scnr-*/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
     handle_failure
 fi
 echo "done."
