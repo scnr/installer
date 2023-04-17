@@ -14,7 +14,7 @@ else
     sudo -p "Please enter root password: " -S test true
 
     if [[ $? -ne 0 ]]; then
-      echo "SUDO failed."
+      echo "SUDO failed, installation cannot continue."
       exit 1
     fi
 
