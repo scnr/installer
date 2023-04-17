@@ -52,9 +52,9 @@ EOF
 latest_release=$(curl -fsS https://downloads.ecsypno.com/scnr/LATEST_RELEASE 2> /dev/null)
 if [[ $? == 22 ]] ; then
     echo
-    echo "***************************************************************"
-    echo "Remote SCNR packages are being updated, please try again later."
-    echo "***************************************************************"
+    echo "*********************************************************"
+    echo "Server is undergoing maintenance, please try again later."
+    echo "*********************************************************"
     echo
     exit 2
 fi
