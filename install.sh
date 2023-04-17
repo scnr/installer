@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 cat<<EOF
-
                       SCNR installer
 -------------------------------------------------------------------------
 EOF
@@ -56,27 +55,28 @@ print_eula() {
   and is by no means to be used for commercial or harmful actions.
 
   Reverse engineering of this software is strictly prohibited!
-
 EOF
 
-latest_release=$(curl -fsS https://downloads.ecsypno.com/scnr/LATEST_RELEASE 2> /dev/null)
-if [[ $? == 22 ]] ; then
     echo
-    echo "*********************************************************"
-    echo "Server is undergoing maintenance, please try again later."
-    echo "*********************************************************"
-    echo
-    exit 2
-fi
 
-agree=""
-read -p "Input \"I AGREE\" to accept: " agree
+    latest_release=$(curl -fsS https://downloads.ecsypno.com/scnr/LATEST_RELEASE 2> /dev/null)
+    if [[ $? == 22 ]] ; then
+        echo
+        echo "*********************************************************"
+        echo "Server is undergoing maintenance, please try again later."
+        echo "*********************************************************"
+        echo
+        exit 2
+    fi
 
-if [[ "$agree" != "I AGREE" ]]; then
-  exit
-fi
+    agree=""
+    read -p "Input \"I AGREE\" to accept: " agree
 
-echo
+    if [[ "$agree" != "I AGREE" ]]; then
+      exit
+    fi
+
+   echo
 }
 
 print_eula
