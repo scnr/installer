@@ -11,6 +11,22 @@ cat<<EOF
 
 EOF
 
+if (( UID == 0 )); then
+    echo "Cannot run as root!"
+    exit 1
+else
+    sudo="sudo"
+
+    sudo -p "Please enter root password: " -S test true
+
+    if [[ $? -ne 0 ]]; then
+      echo "SUDO failed."
+      exit 1
+    fi
+
+    echo
+fi
+
 #
 # Checks the last return value and exits with an error message on failure.
 #
@@ -79,13 +95,6 @@ if [[ "$(operating_system)" == "darwin" ]]; then
         echo "OS X version $osx_current is not supported, supported versions are >= $osx_supported_min."
         exit 1
     fi
-fi
-
-# In case of Docker or already being root.
-if (( UID == 0 )); then
-    sudo=""
-else
-    sudo="sudo"
 fi
 
 log=./scnr.install.log
