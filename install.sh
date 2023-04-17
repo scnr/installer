@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+alias curl="curl -f --retry 12 --retry-all-errors"
+
 cat<<EOF
 
                       SCNR installer
@@ -47,6 +49,16 @@ print_eula() {
 
 EOF
 
+latest_release=$(curl -sS https://downloads.ecsypno.com/scnr/LATEST_RELEASE)
+if [[ $? == 22 ]] ; then
+    echo
+    echo "***************************************************************"
+    echo "Remote SCNR packages are being updated, please try again later."
+    echo "***************************************************************"
+    echo
+    exit 2
+fi
+
 agree=""
 read -p "Input \"I AGREE\" to accept: " agree
 
@@ -76,12 +88,6 @@ else
     sudo="sudo"
 fi
 
-latest_release=$(curl -sS https://downloads.ecsypno.com/scnr/LATEST_RELEASE)
-
-scnr_dir="./$latest_release"
-scnr_url="https://downloads.ecsypno.com/scnr/scnr-latest-$(operating_system)-$(architecture).tar.gz"
-scnr_package="/tmp/$latest_release.tar.gz"
-scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 log=./scnr.install.log
 
 yum_cmd=$(which yum)
@@ -109,8 +115,8 @@ case $package_manager in
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
     chrome_package="${chrome_package}deb"
 
-    echo "(1/2) Google Chrome"
-    echo -n "   * Downloading..."
+    echo "(1/2) Handling dependencies"
+    echo -n "   * Downloading Chrome..."
     curl -so $chrome_package $chrome_url
     handle_failure
     echo "done."
@@ -128,8 +134,8 @@ case $package_manager in
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
-    echo "(1/2) Google Chrome"
-    echo -n "   * Downloading..."
+    echo "(1/2) Handling dependencies"
+    echo -n "   * Downloading Chrome..."
     curl -so $chrome_package $chrome_url
     handle_failure
     echo "done."
@@ -145,14 +151,14 @@ case $package_manager in
     chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
     chrome_package="${chrome_package}rpm"
 
-    echo "(1/2) Google Chrome"
-    echo -n "   * Downloading..."
+    echo "(1/2) Handling dependencies"
+    echo -n "   * Downloading Chrome..."
     curl -so $chrome_package $chrome_url
     handle_failure
     echo "done."
 
     echo -n "   * Installing..."
-    $sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses $chrome_package 2>> $log 1>> $log
+    $sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses curl $chrome_package 2>> $log 1>> $log
     handle_failure
     echo "done."
     rm $chrome_package
@@ -160,13 +166,18 @@ case $package_manager in
 
   brew)
 
-    echo "(1/2) curl"
+    echo "(1/2) Handling dependencies"
     echo -n "   * Installing..."
     brew install curl 2>> $log 1>> $log
     handle_failure
     echo "done."
     ;;
 esac
+
+scnr_dir="./$latest_release"
+scnr_url="https://downloads.ecsypno.com/scnr/scnr-latest-$(operating_system)-$(architecture).tar.gz"
+scnr_package="/tmp/$latest_release.tar.gz"
+scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 
 echo
 echo "(2/2) SCNR"
