@@ -49,7 +49,7 @@ print_eula() {
 
 EOF
 
-latest_release=$(curl -sS https://downloads.ecsypno.com/scnr/LATEST_RELEASE)
+latest_release=$(curl -fsS https://downloads.ecsypno.com/scnr/LATEST_RELEASE 2> /dev/null)
 if [[ $? == 22 ]] ; then
     echo
     echo "***************************************************************"
