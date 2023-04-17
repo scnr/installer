@@ -1,14 +1,9 @@
 #!/usr/bin/env bash
 
-alias curl="curl -f --retry 12 --retry-all-errors"
-
 cat<<EOF
 
                       SCNR installer
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         by Tasos Laskos <tasos.laskos@ecsypno.com>
 -------------------------------------------------------------------------
-
 EOF
 
 if (( UID == 0 )); then
@@ -54,8 +49,7 @@ version() {
 
 print_eula() {
     cat<<EOF
-
-  Copyright 2023 Tasos Laskos <tasos.laskos@gmail.com>.
+  Copyright 2023 Ecsypno Single Member P.C. <http://ecsypno.com>.
   ALL rights reserved.
 
   This software is provided "AS IS" and purely for demonstration/evaluation purposes
