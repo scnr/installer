@@ -164,11 +164,14 @@ case $package_manager in
 
   brew)
 
-    echo "(1/2) Handling dependencies"
-    echo -n "   * Installing..."
-    brew install curl 2>> $log 1>> $log
-    handle_failure
-    echo "done."
+    echo "OSX is not currently supported."
+    exit 0
+
+#    echo "(1/2) Handling dependencies"
+#    echo -n "   * Installing..."
+#    brew install curl 2>> $log 1>> $log
+#    handle_failure
+#    echo "done."
     ;;
 esac
 
