@@ -5,16 +5,21 @@ cat<<EOF
 -------------------------------------------------------------------------
 EOF
 
-sudo="sudo"
+if (( UID == 0 )); then
+    echo "Cannot run as root!"
+    exit 1
+else
+    sudo="sudo"
 
-sudo -p "Please enter root password: " -S test true
+    sudo -p "Please enter root password: " -S test true
 
-if [[ $? -ne 0 ]]; then
-  echo "SUDO failed, installation cannot continue."
-  exit 1
+    if [[ $? -ne 0 ]]; then
+      echo "SUDO failed, installation cannot continue."
+      exit 1
+    fi
+
+    echo
 fi
-
-echo
 
 #
 # Checks the last return value and exits with an error message on failure.
