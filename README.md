@@ -1,7 +1,7 @@
-# SCNR Installer
+# Codename SCNR Installer
 
-Installation instructions for [SCNR](https://ecsypno.com/scnr-documentation/) on
-Debian-based, RedHat-based or SuSE Linux distributions.
+Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename-scnr) on Linux
+x86 64bit.
 
 ## Automated installation
 
@@ -13,7 +13,7 @@ bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/main/insta
 
 ## Manual installation
 
-1. Download the [package](https://downloads.ecsypno.com/).
+1. Download the [latest package](https://downloads.ecsypno.com/scnr/scnr-latest-linux-x86_64.tar.gz).
 2. Extract.
 
 ### SCNR WebUI
