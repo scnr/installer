@@ -8,17 +8,17 @@ EOF
 if (( UID == 0 )); then
     echo "Cannot run as root!"
     exit 1
-else
-    sudo="sudo"
-
-    sudo -p "Please enter root password: " -S test true
-
-    if [[ $? -ne 0 ]]; then
-      echo "SUDO failed, installation cannot continue."
-      exit 1
-    fi
-
-    echo
+#else
+#    sudo="sudo"
+#
+#    sudo -p "Please enter root password: " -S test true
+#
+#    if [[ $? -ne 0 ]]; then
+#      echo "SUDO failed, installation cannot continue."
+#      exit 1
+#    fi
+#
+#    echo
 fi
 
 #
