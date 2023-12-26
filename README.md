@@ -11,14 +11,10 @@ To install run the following command in a terminal of your choice:
 bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/main/install.sh)"
 ```
 
-It will also install [Google Chrome](https://www.google.com/chrome/) 
-to resolve its dependencies for the _Engine_.
-
 ## Manual installation
 
 1. Download the [package](https://downloads.ecsypno.com/).
 2. Extract.
-3. Install [Google Chrome](https://www.google.com/chrome/) to resolve its dependencies.
 
 ### SCNR WebUI
 
