@@ -79,17 +79,12 @@ EOF
    echo
 }
 
-print_eula
-
 if [[ "$(operating_system)" == "darwin" ]]; then
-    osx_supported_min="10.15.7"
-    osx_current=$(sw_vers -productVersion)
-
-    if [ $(version $osx_current) -lt $(version $osx_supported_min) ]; then
-        echo "OS X version $osx_current is not supported, supported versions are >= $osx_supported_min."
-        exit 1
-    fi
+    echo "OSX is not currently supported."
+    exit 1
 fi
+
+print_eula
 
 log=./scnr.install.log
 
@@ -111,72 +106,19 @@ else
     exit 1
 fi
 
-chrome_package="/tmp/google-chrome."
-
 case $package_manager in
   apt-get)
-    chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-    chrome_package="${chrome_package}deb"
-
-    echo "(1/2) Handling dependencies"
-    echo -n "   * Downloading Chrome..."
-    curl -so $chrome_package $chrome_url
-    handle_failure
-    echo "done."
-
-    echo -n "   * Installing..."
-    $sudo apt-get update 2>> $log 1>> $log
-    handle_failure
-    $sudo apt-get -y install $chrome_package 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-    rm $chrome_package
     ;;
 
   yum)
-    chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
-    chrome_package="${chrome_package}rpm"
-
-    echo "(1/2) Handling dependencies"
-    echo -n "   * Downloading Chrome..."
-    curl -so $chrome_package $chrome_url
-    handle_failure
-    echo "done."
-
-    echo -n "   * Installing..."
-    $sudo yum -y install $chrome_package 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-    rm $chrome_package
     ;;
 
   zypper)
-    chrome_url="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
-    chrome_package="${chrome_package}rpm"
-
-    echo "(1/2) Handling dependencies"
-    echo -n "   * Downloading Chrome..."
-    curl -so $chrome_package $chrome_url
-    handle_failure
-    echo "done."
-
-    echo -n "   * Installing..."
-    $sudo zypper --non-interactive --no-gpg-checks --quiet install --auto-agree-with-licenses curl $chrome_package 2>> $log 1>> $log
-    handle_failure
-    echo "done."
-    rm $chrome_package
     ;;
 
   brew)
-
     echo "OSX is not currently supported."
     exit 0
-
-#    echo "(1/2) Handling dependencies"
-#    echo -n "   * Installing..."
-#    brew install curl 2>> $log 1>> $log
-#    handle_failure
-#    echo "done."
     ;;
 esac
 
@@ -186,7 +128,6 @@ scnr_package="/tmp/$latest_release.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 
 echo
-echo "(2/2) SCNR"
 
 echo -n "   * Downloading..."
 curl -so $scnr_package $scnr_url
