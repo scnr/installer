@@ -130,9 +130,8 @@ scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 echo
 
 echo "   * Downloading..."
-curl $scnr_url -o $scnr_package
+curl --retry 12 --retry-all-errors $scnr_url -o $scnr_package
 handle_failure
-echo "done."
 
 echo -n "   * Installing..."
 mkdir $scnr_dir
