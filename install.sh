@@ -124,7 +124,7 @@ print_eula
 
 scnr_dir="./$latest_release"
 scnr_url="https://downloads.ecsypno.com/scnr/scnr-latest-$(operating_system)-$(architecture).tar.gz"
-scnr_package="/tmp/$latest_release.tar.gz"
+scnr_package="./$latest_release.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 
 echo
