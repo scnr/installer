@@ -8,17 +8,6 @@ EOF
 if (( UID == 0 )); then
     echo "Cannot run as root!"
     exit 1
-#else
-#    sudo="sudo"
-#
-#    sudo -p "Please enter root password: " -S test true
-#
-#    if [[ $? -ne 0 ]]; then
-#      echo "SUDO failed, installation cannot continue."
-#      exit 1
-#    fi
-#
-#    echo
 fi
 
 #
@@ -74,63 +63,18 @@ if [[ "$(operating_system)" == "darwin" ]]; then
     exit 1
 fi
 
-latest_release=$(curl -fsS https://downloads.ecsypno.com/scnr/LATEST_RELEASE 2> /dev/null)
-if [[ $? == 22 ]] ; then
-    echo
-    echo "*********************************************************"
-    echo "Server is undergoing maintenance, please try again later."
-    echo "*********************************************************"
-    echo
-    exit 2
-fi
-
-log=./scnr.install.log
-
 print_eula
 
-#yum_cmd=$(which yum)
-#apt_get_cmd=$(which apt-get)
-#zypper_cmd=$(which zypper)
-#brew_cmd=$(which brew)
-#
-#if [[ ! -z $yum_cmd ]]; then
-#    package_manager="yum"
-#elif [[ ! -z $apt_get_cmd ]]; then
-#    package_manager="apt-get"
-#elif [[ ! -z $zypper_cmd ]]; then
-#    package_manager="zypper"
-#elif [[ ! -z $brew_cmd ]]; then
-#    package_manager="brew"
-#else
-#    echo "No supported package manager found, please follow a manual installation process."
-#    exit 1
-#fi
-#
-#case $package_manager in
-#  apt-get)
-#    ;;
-#
-#  yum)
-#    ;;
-#
-#  zypper)
-#    ;;
-#
-#  brew)
-#    echo "OSX is not currently supported."
-#    exit 0
-#    ;;
-#esac
-
-scnr_dir="./$latest_release"
-scnr_url="https://downloads.ecsypno.com/scnr/scnr-latest-$(operating_system)-$(architecture).tar.gz"
-scnr_package="./$latest_release.tar.gz"
+scnr_url="https://github.com/scnr/installer/releases/latest/download/scnr-$(operating_system)-$(architecture).tar.gz"
+scnr_dir="./scnr-`date "+%Y%m%d_%H%M%S"`"
+scnr_package="./scnr-$(operating_system)-$(architecture).tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
+log=./scnr.install.log
 
 echo
 
 echo "   * Downloading..."
-curl --retry 12 --retry-delay 1 --retry-all-errors $scnr_url -o $scnr_package
+curl -L --retry 12 --retry-delay 1 --retry-all-errors $scnr_url -o $scnr_package
 handle_failure
 
 echo -n "   * Installing..."
