@@ -13,7 +13,7 @@ bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/main/insta
 
 ## Manual installation
 
-1. Download the [latest package](https://downloads.ecsypno.com/scnr/scnr-latest-linux-x86_64.tar.gz).
+1. Download the [latest package](https://github.com/scnr/installer/releases/latest/download/scnr-linux-x86_64.tar.gz).
 2. Extract.
 
 ### SCNR WebUI
