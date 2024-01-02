@@ -8,7 +8,7 @@ x86 64bit.
 To install run the following command in a terminal of your choice:
 
 ```bash
-bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/main/install.sh)"
+bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 ```
 
 ## Manual installation
