@@ -13,7 +13,7 @@ bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 
 ## Manual installation
 
-1. Download the [latest package](https://github.com/scnr/installer/releases/latest/download/scnr-linux-x86_64.tar.gz).
+1. Download the [latest package](https://github.com/scnr/installer/releases).
 2. Extract.
 
 ### SCNR WebUI

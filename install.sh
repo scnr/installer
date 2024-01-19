@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cat<<EOF
-                      SCNR installer
+                      Codename SCNR installer
 -------------------------------------------------------------------------
 EOF
 
@@ -37,11 +37,13 @@ version() {
 
 print_eula() {
     cat<<EOF
-  Copyright 2023 Ecsypno Single Member P.C. <http://ecsypno.com>.
+  Copyright 2023-2024 Ecsypno Single Member P.C. <http://ecsypno.com>.
   ALL rights reserved.
 
-  This software is provided "AS IS" and purely for demonstration/evaluation purposes
-  and is by no means to be used for commercial or harmful actions.
+  This software is provided "AS IS" and purely for demonstration/evaluation purposes,
+  without any WARRANTIES and is by no means to be used for commercial, illegal or harmful action.
+
+  Should damage arise by the use of this software, the author accepts no responsibility.
 
   Reverse engineering of this software is strictly prohibited!
 EOF
@@ -68,14 +70,14 @@ under_maintenance() {
     exit
 }
 
-under_maintenance
+#under_maintenance
 
 print_eula
 
 latest_version=`curl -sL https://raw.githubusercontent.com/scnr/version/main/LATEST`
-scnr_url="https://github.com/scnr/installer/releases/latest/download/scnr-$latest_version-$(operating_system)-$(architecture).tar.gz"
-scnr_dir="./scnr-$latest_version-$(operating_system)-$(architecture)"
-scnr_package="./scnr-$latest_version-$(operating_system)-$(architecture).tar.gz"
+scnr_url="https://github.com/scnr/installer/releases/download/v$latest_version/scnr-v$latest_version-$(operating_system)-$(architecture).tar.gz"
+scnr_dir="./scnr-v$latest_version"
+scnr_package="./scnr-v$latest_version.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 log=./scnr.install.log
 
@@ -86,7 +88,6 @@ curl -L --retry 12 --retry-delay 1 --retry-all-errors $scnr_url -o $scnr_package
 handle_failure
 
 echo -n "   * Installing..."
-mkdir $scnr_dir
 tar xf $scnr_package
 handle_failure
 rm $scnr_package
@@ -96,11 +97,11 @@ db="$HOME/.scnr/pro/db/production.sqlite3"
 
 if [[ -f "$db" ]]; then
     echo -n "   * Updating the DB..."
-    $scnr_dir/scnr-*/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
+    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
     handle_failure
 else
     echo -n "   * Setting up the DB..."
-    $scnr_dir/scnr-*/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
+    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
     handle_failure
 fi
 echo "done."
