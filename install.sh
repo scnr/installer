@@ -63,11 +63,19 @@ if [[ "$(operating_system)" == "darwin" ]]; then
     exit 1
 fi
 
+under_maintenance() {
+    echo "Down for maintenance, will be back up shortly..."
+    exit
+}
+
+under_maintenance
+
 print_eula
 
-scnr_url="https://github.com/scnr/installer/releases/latest/download/scnr-$(operating_system)-$(architecture).tar.gz"
-scnr_dir="./scnr-`date "+%Y%m%d_%H%M%S"`"
-scnr_package="./scnr-$(operating_system)-$(architecture).tar.gz"
+latest_version=`curl -sL https://raw.githubusercontent.com/scnr/version/main/LATEST`
+scnr_url="https://github.com/scnr/installer/releases/latest/download/scnr-$latest_version-$(operating_system)-$(architecture).tar.gz"
+scnr_dir="./scnr-$latest_version-$(operating_system)-$(architecture)"
+scnr_package="./scnr-$latest_version-$(operating_system)-$(architecture).tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
 log=./scnr.install.log
 
@@ -79,7 +87,7 @@ handle_failure
 
 echo -n "   * Installing..."
 mkdir $scnr_dir
-tar xf $scnr_package -C $scnr_dir
+tar xf $scnr_package
 handle_failure
 rm $scnr_package
 echo "done."
