@@ -18,10 +18,38 @@ bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 
 ### SCNR WebUI
 
-If you'd like to use SCNR WebUI, its database will need to be prepared.
+If you'd like to use the Codename SCNR WebUI, its database will need to be prepared.
 
 Out of the box, the WebUI comes configured with [SQLite](https://sqlite.org/index.html), however,
 for better results and performance please switch to [PostgreSQL](https://www.postgresql.org/).
+
+#### PostgreSQL
+
+##### Configuration
+
+Please exchange `secret` with a secure password in the role creation commands.
+
+###### Role creation
+
+```
+$ sudo -u postgres psql
+postgres=# CREATE USER "scnr-pro" WITH PASSWORD 'secret';
+postgres=# ALTER USER "scnr-pro" superuser;
+```
+
+###### Connection
+
+From the package root directory:
+
+```
+# Backup SQLite config.
+mv .system/scnr-ui-pro/config/database.yml .system/scnr-ui-pro/config/database.yml.bak
+
+# Set to use PostgreSQL config.
+cp .system/scnr-ui-pro/config/database.postgres.yml .system/scnr-ui-pro/config/database.yml
+```
+
+Now edit `.system/scnr-ui-pro/config/database.yml` to change the password from `secret`.
 
 #### Setup
 
@@ -35,28 +63,6 @@ If you'd like to update an existing installation you can do it with:
 
     ./bin/scnr_pro_task db:migrate
 
-#### PostgreSQL
-
-##### Configuration
-
-Please exchange `secret` with a secure password.
-
-###### Role creation
-
-```
-$ sudo -u postgres psql
-postgres=# CREATE USER "scnr-pro" WITH PASSWORD 'secret';
-postgres=# ALTER USER "scnr-pro" superuser;
-```
-
-###### Connection
-
-```
-mv .system/scnr-ui-pro/config/database.yml .system/scnr-ui-pro/config/database.yml.bak
-cp .system/scnr-ui-pro/config/database.postgres.yml .system/scnr-ui-pro/config/database.yml
-```
-
-Now edit `.system/scnr-ui-pro/config/database.yml` to change the password from `secret`.
 
 ## License
 
