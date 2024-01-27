@@ -337,6 +337,7 @@ scnr_url="https://github.com/scnr/installer/releases/download/v$latest_version/s
 scnr_dir="./scnr-v$latest_version"
 scnr_package="./scnr-v$latest_version.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
+scnr_license_file="$HOME/.scnr/license.key"
 log=./scnr.install.log
 
 echo
@@ -364,15 +365,17 @@ else
 fi
 echo "done."
 
-echo
-echo "Codename SCNR activation"
-echo "(If you don't have a license, get one from https://ecsypno.com -- a free trial license is available there too.)"
-key=""
-read -p "License key: " key
-$scnr_dir/bin/scnr_activate $key
+if ! [ -f $scnr_license_file ]; then
+    echo
+    echo "Codename SCNR activation"
+    echo "(If you don't have a license, get one from https://ecsypno.com -- a free trial license is available there too.)"
+    key=""
+    read -p "License key: " key
+    $scnr_dir/bin/scnr_activate $key
 
-if [[ $? != 0 ]]; then
-    echo "Activation was unsuccessful, please run bin/scnr_activate later with a valid license key."
+    if [[ $? != 0 ]]; then
+        echo "Activation was unsuccessful, please run bin/scnr_activate later with a valid license key."
+    fi
 fi
 
 echo
