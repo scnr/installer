@@ -368,7 +368,7 @@ echo "done."
 if ! [ -f $scnr_license_file ]; then
     echo
     echo "Codename SCNR activation"
-    echo "(If you don't have a license, get one from https://ecsypno.com -- a free trial license is available there too.)"
+    echo "(If you don't have a license key, get one from https://ecsypno.com -- a free trial is available too.)"
     key=""
     read -p "License key: " key
     $scnr_dir/bin/scnr_activate $key
