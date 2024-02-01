@@ -352,19 +352,6 @@ handle_failure
 rm $scnr_package
 echo "done."
 
-db="$HOME/.scnr/pro/db/production.sqlite3"
-
-if [[ -f "$db" ]]; then
-    echo -n "   * Updating the DB..."
-    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
-    handle_failure
-else
-    echo -n "   * Setting up the DB..."
-    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
-    handle_failure
-fi
-echo "done."
-
 if ! [ -f $scnr_license_file ]; then
     echo
     echo "Codename SCNR activation"
@@ -377,6 +364,19 @@ if ! [ -f $scnr_license_file ]; then
         echo "Activation was unsuccessful, please run bin/scnr_activate later with a valid license key."
     fi
 fi
+
+db="$HOME/.scnr/pro/db/production.sqlite3"
+
+if [[ -f "$db" ]]; then
+    echo -n "   * Updating the DB..."
+    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
+    handle_failure
+else
+    echo -n "   * Setting up the DB..."
+    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
+    handle_failure
+fi
+echo "done."
 
 echo
 echo
