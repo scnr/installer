@@ -13,8 +13,10 @@ bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 
 ## Manual installation
 
-1. Download the [latest package](https://github.com/scnr/installer/releases).
-2. Extract.
+1. [Buy a license activation key](https://ecsypno.com/)  -- if you haven't already done so for a previous release.
+2. Download the [latest package](https://github.com/scnr/installer/releases).
+3. Extract.
+4. Run `bin/scnr_activate KEY` to activate your installation -- if you haven't already done so for a previous release.
 
 ### SCNR WebUI
 
