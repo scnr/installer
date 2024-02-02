@@ -361,8 +361,11 @@ if ! [ -f $scnr_license_file ]; then
     $scnr_dir/bin/scnr_activate $key
 
     if [[ $? != 0 ]]; then
-        echo "Activation was unsuccessful, please run bin/scnr_activate later with a valid license key."
+        echo "Activation was unsuccessful, please retry the installation process with a valid license key."
+        exit 1
     fi
+
+    echo
 fi
 
 db="$HOME/.scnr/pro/db/production.sqlite3"
