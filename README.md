@@ -11,6 +11,13 @@ To install run the following command in a terminal of your choice:
 bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 ```
 
+You can now run Codename SCNR by using the executables under the `bin/` directory.
+
+1. For a CLI scan you can run `bin/scnr URL`.
+2. You can use Codename SCNR Pro by running `bin/scnr_pro` -- [PostgreSQL](#postgresql) recommended..
+
+For more information please consult the [documentation](https://documentation.ecsypno.com/scnr/).
+
 ## Manual installation
 
 1. Download the [latest package](https://github.com/scnr/installer/releases).
@@ -18,7 +25,15 @@ bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 3. Run `bin/scnr_activate KEY` to activate your installation -- if you haven't already done so for a previous release.
   * [Acquire a license activation key](https://ecsypno.com/)  -- if you haven't already done so for a previous release.
 
-### SCNR WebUI
+You can now run Codename SCNR by using the executables under the `bin/` directory.
+
+For a CLI scan you can run `bin/scnr URL`.
+
+For more information please consult the [documentation](https://documentation.ecsypno.com/scnr/).
+
+### Codename SCNR Pro (WebUI)
+
+You can run Codename SCNR Pro by running `bin/scnr_pro`.
 
 If you'd like to use the Codename SCNR WebUI, its database will need to be prepared.
 

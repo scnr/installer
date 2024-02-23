@@ -386,3 +386,9 @@ echo
 echo -n "SCNR installed at:   "
 echo $scnr_dir
 echo "Installation log at: $log"
+echo
+echo "* For a CLI scan you can run: $scnr_dir/bin/scnr URL"
+echo "* To use Codename SCNR Pro you can run: $scnr_dir/bin/scnr_pro"
+echo
+echo "Documentation can be found at: https://documentation.ecsypno.com/scnr/"
+echo
