@@ -14,7 +14,7 @@ bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 You can now run Codename SCNR by using the executables under the `bin/` directory.
 
 1. For a CLI scan you can run `bin/scnr URL`.
-2. You can use Codename SCNR Pro by running `bin/scnr_pro` -- [PostgreSQL](#postgresql) recommended..
+2. You can use Codename SCNR Pro by running `bin/scnr_pro` -- [PostgreSQL](#postgresql) recommended.
 
 For more information please consult the [documentation](https://documentation.ecsypno.com/scnr/).
 
