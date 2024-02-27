@@ -80,6 +80,15 @@ If you'd like to update an existing installation you can do it with:
 
     ./bin/scnr_pro_task db:migrate
 
+## Dependencies for headless/minimal environments
+
+For minimal environments such as headless servers or Ubuntu on the Windows Subsystem for Linux (WSL) please first run:
+
+```
+sudo apt-get update
+sudo apt-get install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev libasound2
+```
+
 
 ## License
 
