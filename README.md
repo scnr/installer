@@ -3,6 +3,10 @@
 Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename-scnr) on Linux
 x86 64bit.
 
+* [Automated installation](#automated-installation)
+* [Manual installation](#manual-installation)
+* [Dependencies for headless environments](#dependencies-for-headless-environments)
+
 ## Automated installation
 
 To install run the following command in a terminal of your choice:
@@ -80,9 +84,9 @@ If you'd like to update an existing installation you can do it with:
 
     ./bin/scnr_pro_task db:migrate
 
-## Dependencies for headless/minimal environments
+## Dependencies for headless environments
 
-For minimal environments such as headless servers or Ubuntu on the Windows Subsystem for Linux (WSL) please first run:
+For minimal environments such as headless servers please first run:
 
 ```
 sudo apt-get update
