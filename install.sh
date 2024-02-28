@@ -323,6 +323,11 @@ if [[ "$(operating_system)" == "darwin" ]]; then
     exit 1
 fi
 
+if [[ $(grep -i Microsoft /proc/version) ]]; then
+    echo "WSL is not currently supported."
+    exit 1
+fi
+
 under_maintenance() {
     echo "Down for maintenance, will be back up shortly..."
     exit
