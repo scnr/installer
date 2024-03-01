@@ -348,7 +348,7 @@ log=./scnr.install.log
 echo
 
 echo "   * Downloading..."
-curl -L --retry 12 --retry-delay 1 --retry-all-errors $scnr_url -o $scnr_package
+curl -L -C - --retry 12 --retry-delay 1 --retry-all-errors $scnr_url -o $scnr_package
 handle_failure
 
 echo -n "   * Installing..."
@@ -371,6 +371,17 @@ if ! [ -f $scnr_license_file ]; then
     fi
 
     echo
+fi
+
+mkdir -p $HOME/.scnr/pro/config/
+
+db_config="$HOME/.scnr/pro/config/database.yml"
+
+if [[ ! -f "$db_config" ]]; then
+    mv $scnr_dir/.system/scnr-ui-pro/config/database.yml $HOME/.scnr/pro/config/
+    mv $scnr_dir/.system/scnr-ui-pro/config/database.postgres.yml $HOME/.scnr/pro/config/
+
+    ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/database.yml
 fi
 
 db="$HOME/.scnr/pro/db/production.sqlite3"

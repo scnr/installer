@@ -19,16 +19,49 @@ bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 You can now run Codename SCNR by using the executables under the `bin/` directory.
 
 1. For a CLI scan you can run `bin/scnr URL`.
-2. You can use Codename SCNR Pro by running `bin/scnr_pro` -- [PostgreSQL](#postgresql) recommended.
+2. You can use Codename SCNR Pro by running `bin/scnr_pro`
+   1. Setting up PostgreSQL is recommended for production workloads.
 
 For more information please consult the [documentation](https://documentation.ecsypno.com/scnr/).
+
+### PostgreSQL
+
+For a more reliable Codename SCNR Pro experience, it's best to configure it to use PostgreSQL.
+
+Please exchange `secret` with a secure password in the role creation commands.
+
+#### Role creation
+
+```
+$ sudo -u postgres psql
+postgres=# CREATE USER "scnr-pro" WITH PASSWORD 'secret';
+postgres=# ALTER USER "scnr-pro" superuser;
+```
+
+#### Connection
+
+```
+# Backup SQLite config.
+mv ~/.scnr/pro/config/database.yml ~/.scnr/pro/config/database.yml.bak
+
+# Set to use PostgreSQL config.
+cp ~/.scnr/pro/config/database.postgres.yml ~/.scnr/pro/config/database.yml
+```
+
+Now edit `~/.scnr/pro/config/database.yml` to change the password from `secret`.
+
+#### Setup
+
+From the Codename SCNR package directory:
+
+    bin/scnr_pro_task db:create db:migrate db:seed
 
 ## Manual installation
 
 1. Download the [latest package](https://github.com/scnr/installer/releases).
 2. Extract.
 3. Run `bin/scnr_activate KEY` to activate your installation -- if you haven't already done so for a previous release.
-  * [Acquire a license activation key](https://ecsypno.com/)  -- if you haven't already done so for a previous release.
+   1. [Acquire a license activation key](https://ecsypno.com/)  -- if you haven't already done so for a previous release.
 
 You can now run Codename SCNR by using the executables under the `bin/` directory.
 
