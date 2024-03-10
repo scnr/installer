@@ -380,9 +380,10 @@ db_config="$HOME/.scnr/pro/config/database.yml"
 if [[ ! -f "$db_config" ]]; then
     mv $scnr_dir/.system/scnr-ui-pro/config/database.yml $HOME/.scnr/pro/config/
     mv $scnr_dir/.system/scnr-ui-pro/config/database.postgres.yml $HOME/.scnr/pro/config/
-
-    ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/database.yml
 fi
+
+rm -f $scnr_dir/.system/scnr-ui-pro/config/database.yml
+ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/database.yml
 
 db="$HOME/.scnr/pro/db/production.sqlite3"
 
