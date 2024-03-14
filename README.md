@@ -5,8 +5,7 @@ x86 64bit.
 
 * [Automated installation](#automated-installation)
 * [Manual installation](#manual-installation)
-* [Dependencies for headless environments](#dependencies-for-headless-environments)
-* [Virtualized environments](#virtualized-environments)
+* [Dependencies for headless environments or WSL](#dependencies-for-headless-environments-or-wsl)
 
 ## Automated installation
 
@@ -118,21 +117,14 @@ If you'd like to update an existing installation you can do it with:
 
     ./bin/scnr_pro_task db:migrate
 
-## Dependencies for headless environments
+## Dependencies for headless environments or WSL
 
-For minimal environments such as headless servers please first run:
+For minimal environments such as headless servers or the Windows Subsystem for Linux, please first run:
 
 ```
 sudo apt-get update
 sudo apt-get install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev libasound2
 ```
-
-## Virtualized environments
-
-Due to licensing reasons, it is important for the host to maintain the same name and MAC address on its network
-interface between boots.
-
-If you are installing Codename SCNR within a virtualized environment please prepare accordingly prior to software activation.
 
 ## License
 
