@@ -387,7 +387,7 @@ scnr_edition=`$scnr_dir/bin/scnr_edition`
 if [[ $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
     if [[ -f "$db" ]]; then
         echo -n "   * Updating the DB..."
-        $scnr_dir/bin/scnr_pro_task db:migrate --trace 2>> $log 1>> $log
+        $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
         handle_failure
     else
         echo -n "   * Setting up the DB..."
