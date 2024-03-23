@@ -355,7 +355,7 @@ echo "done."
 if ! [ -f $scnr_license_file ]; then
     echo
     echo "Codename SCNR activation"
-    echo "(If you don't have a license key, get one from https://ecsypno.com -- a free trial is available too.)"
+    echo "(If you don't have a license key, get one from https://ecsypno.com -- free Community and Trial editions are available too.)"
     key=""
     read -p "License key: " key
     $scnr_dir/bin/scnr_activate $key
@@ -382,16 +382,20 @@ ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/d
 
 db="$HOME/.scnr/pro/db/production.sqlite3"
 
-if [[ -f "$db" ]]; then
-    echo -n "   * Updating the DB..."
-    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
-    handle_failure
-else
-    echo -n "   * Setting up the DB..."
-    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
-    handle_failure
+scnr_edition=`$scnr_dir/bin/scnr_edition`
+
+if [[ $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
+    if [[ -f "$db" ]]; then
+        echo -n "   * Updating the DB..."
+        $scnr_dir/bin/scnr_pro_task db:migrate --trace 2>> $log 1>> $log
+        handle_failure
+    else
+        echo -n "   * Setting up the DB..."
+        $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
+        handle_failure
+    fi
+    echo "done."
 fi
-echo "done."
 
 echo
 echo
