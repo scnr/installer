@@ -399,7 +399,7 @@ fi
 
 echo
 echo
-echo -n "SCNR installed at:   "
+echo -n "Codename SCNR installed at:   "
 echo $scnr_dir
 echo "Installation log at: $log"
 echo
