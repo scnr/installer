@@ -3,6 +3,7 @@
 cat<<EOF
                       Codename SCNR installer
 -------------------------------------------------------------------------
+
 EOF
 
 if (( UID == 0 )); then
@@ -329,6 +330,19 @@ under_maintenance() {
 }
 
 #under_maintenance
+
+reserved="
+    scnr
+"
+cwd="$(basename `pwd`)"
+
+for i in $reserved; do
+    if [[ $i == $cwd ]]; then
+        echo "Installation directory name '$i' is reserved, please install under a different directory name."
+        exit 1
+
+    fi
+done
 
 print_eula
 
