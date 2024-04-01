@@ -398,7 +398,7 @@ db="$HOME/.scnr/pro/db/production.sqlite3"
 
 scnr_edition=`$scnr_dir/bin/scnr_edition`
 
-if [[ $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
+if [[ $scnr_edition == "dev" || $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
     if [[ -f "$db" ]]; then
         echo -n "   * Updating the DB..."
         $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
