@@ -421,6 +421,7 @@ echo "* For a CLI scan you can run: $scnr_dir/bin/scnr URL"
 
 if [[ $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
   echo "* To use Codename SCNR Pro you can run: $scnr_dir/bin/scnr_pro"
+  echo "  * For a better experience please setup PostreSQL: https://github.com/scnr/installer#postgresql"
 fi
 
 echo
