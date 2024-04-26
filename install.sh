@@ -366,6 +366,8 @@ handle_failure
 rm $scnr_package
 echo "done."
 
+mkdir -p $HOME/.scnr/pro/config/
+
 if ! [ -f $scnr_license_file ]; then
     echo
     echo "Codename SCNR activation"
@@ -381,8 +383,6 @@ if ! [ -f $scnr_license_file ]; then
 
     echo
 fi
-
-mkdir -p $HOME/.scnr/pro/config/
 
 db_config="$HOME/.scnr/pro/config/database.yml"
 
