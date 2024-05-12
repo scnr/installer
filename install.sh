@@ -324,6 +324,11 @@ if [[ "$(operating_system)" == "darwin" ]]; then
     exit 1
 fi
 
+if [[ "$(architecture)" != "x86_64" ]]; then
+    echo "Only the x86-64 architecture is currently supported."
+    exit 1
+fi
+
 under_maintenance() {
     echo "Down for maintenance, will be back up shortly..."
     exit
