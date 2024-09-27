@@ -389,22 +389,34 @@ if ! [ -f $scnr_license_file ]; then
     echo
 fi
 
+update=false
 db_config="$HOME/.scnr/pro/config/database.yml"
+if [[ "$1" == "docker" ]]; then
 
-if [[ ! -f "$db_config" ]]; then
-    mv $scnr_dir/.system/scnr-ui-pro/config/database.yml $HOME/.scnr/pro/config/
-    mv $scnr_dir/.system/scnr-ui-pro/config/database.postgres.yml $HOME/.scnr/pro/config/
+  if [[ ! -f "$db_config" ]]; then
+      mv $scnr_dir/.system/scnr-ui-pro/config/database.docker.yml $HOME/.scnr/pro/config/database.yml
+  else
+      update=true
+  fi
+
+else
+
+  if [[ ! -f "$db_config" ]]; then
+      mv $scnr_dir/.system/scnr-ui-pro/config/database.yml $HOME/.scnr/pro/config/
+      mv $scnr_dir/.system/scnr-ui-pro/config/database.postgres.yml $HOME/.scnr/pro/config/
+  else
+      update=true
+  fi
+
 fi
 
 rm -f $scnr_dir/.system/scnr-ui-pro/config/database.yml
 ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/database.yml
 
-db="$HOME/.scnr/pro/db/production.sqlite3"
-
 scnr_edition=`$scnr_dir/bin/scnr_edition`
 
 if [[ $scnr_edition == "dev" || $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
-    if [[ -f "$db" ]]; then
+    if [[ $update ]]; then
         echo -n "   * Updating the DB..."
         $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
         handle_failure
