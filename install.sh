@@ -416,7 +416,7 @@ ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/d
 scnr_edition=`$scnr_dir/bin/scnr_edition`
 
 if [[ $scnr_edition == "dev" || $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
-    if [[ "$update" = true ]]; then
+    if [ "$update" = true ]; then
         echo -n "   * Updating the DB..."
         $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
         handle_failure
