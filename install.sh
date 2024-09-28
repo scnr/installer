@@ -396,7 +396,7 @@ if [[ "$1" == "docker" ]]; then
       mv $scnr_dir/.system/scnr-ui-pro/config/database.docker.yml $HOME/.scnr/pro/config/database.yml
   fi
 
-  scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts (User.count rescue 0)'`
+  scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts begin; User.count; rescue =>; 0; end'`
   if [[ "$scnr_pro_user" == "1" ]]; then
       update=true
   else
