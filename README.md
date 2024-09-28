@@ -3,9 +3,34 @@
 Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename-scnr) on Linux
 x86 64bit.
 
-* [Automated installation](#automated-installation)
-* [Manual installation](#manual-installation)
+* [Docker installation](#docker-installation) -- for Mac OSX, Linux and MS Windows. _(recommended)_
+* [Automated installation](#automated-installation) -- for Linux.
+* [Manual installation](#manual-installation) -- for Linux.
 * [Dependencies for headless environments or WSL](#dependencies-for-headless-environments-or-wsl)
+
+## Docker installation
+
+Prerequisites:
+* [Docker](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
+
+```bash
+git clone https://github.com/scnr/installer.git codename-scnr-installer
+cd codename-scnr-installer
+sudo docker compose up -d --build # Start the services.
+sudo docker exec -it codename-scnr-app-1 bash # Connect to the container.
+codename-scnr@4708900e593c:~$ ./install.sh # Install Codename SCNR over the network.
+[...] # Snip
+codename-scnr@4708900e593c:~$ ls
+install.sh  scnr-v1.5.5  scnr.install.log # TADA!
+```
+
+You can now run Codename SCNR by using the executables under the `bin/` directory.
+
+1. For a CLI scan you can run `bin/scnr URL`.
+2. You can use Codename SCNR Pro by running `bin/scnr_pro`.
+
+For more information please consult the [documentation](https://documentation.ecsypno.com/scnr/).
 
 ## Automated installation
 
