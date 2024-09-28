@@ -25,7 +25,7 @@ codename-scnr@4708900e593c:~$ ls
 install.sh  scnr-v1.5.5  scnr.install.log # TADA!
 ```
 
-You can now run Codename SCNR by using the executables under the `bin/` directory.
+You can now run Codename SCNR by using the executables under the `scnr-v*/bin` directory.
 
 1. For a CLI scan you can run `bin/scnr URL`.
 2. You can use Codename SCNR Pro by running `bin/scnr_pro`.
@@ -40,7 +40,7 @@ To install run the following command in a terminal of your choice:
 bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
 ```
 
-You can now run Codename SCNR by using the executables under the `bin/` directory.
+You can now run Codename SCNR by using the executables under the `scnr-v*/bin` directory.
 
 1. For a CLI scan you can run `bin/scnr URL`.
 2. You can use Codename SCNR Pro by running `bin/scnr_pro`
