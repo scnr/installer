@@ -1,7 +1,6 @@
 # Codename SCNR Installer
 
-Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename-scnr) on Linux
-x86 64bit.
+Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename-scnr):
 
 * [Docker installation](#docker-installation) -- for Mac OSX, Linux and MS Windows. _(recommended)_
 * [Automated installation](#automated-installation) -- for Linux.
