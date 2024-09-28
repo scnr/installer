@@ -389,18 +389,23 @@ if ! [ -f $scnr_license_file ]; then
     echo
 fi
 
-update=false
 db_config="$HOME/.scnr/pro/config/database.yml"
 if [[ "$1" == "docker" ]]; then
 
   if [[ ! -f "$db_config" ]]; then
       mv $scnr_dir/.system/scnr-ui-pro/config/database.docker.yml $HOME/.scnr/pro/config/database.yml
-  else
+  fi
+
+  scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts (User.count rescue 0)'`
+  if [[ "$scnr_pro_user" == "1" ]]; then
       update=true
+  else
+      update=false
   fi
 
 else
 
+  update=false
   if [[ ! -f "$db_config" ]]; then
       mv $scnr_dir/.system/scnr-ui-pro/config/database.yml $HOME/.scnr/pro/config/
       mv $scnr_dir/.system/scnr-ui-pro/config/database.postgres.yml $HOME/.scnr/pro/config/
