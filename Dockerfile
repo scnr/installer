@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:22.04
+FROM --platform=linux/amd64 ubuntu:22.04
 
 RUN groupadd -g 1234 codename-scnr-group
 RUN useradd -m -u 1234 -g codename-scnr-group codename-scnr
