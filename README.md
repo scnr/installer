@@ -16,8 +16,10 @@ Prerequisites:
 ```bash
 git clone https://github.com/scnr/installer.git codename-scnr-installer
 cd codename-scnr-installer
+
 docker compose up -d --build # Start the services.
 docker exec -it codename-scnr-app-1 bash # Connect to the container.
+
 codename-scnr@4708900e593c:~$ ./install.sh # Install Codename SCNR over the network.
 [...] # Snip
 codename-scnr@4708900e593c:~$ ls
