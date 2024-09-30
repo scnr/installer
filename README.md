@@ -32,6 +32,17 @@ You can now run Codename SCNR by using the executables under the `scnr-v*/bin` d
 
 For more information please consult the [documentation](https://documentation.ecsypno.com/scnr/).
 
+### Updating
+
+You can run `./install.sh` when a new version is released to install it automatically.
+
+### Caution!
+
+Use `docker compose stop` to stop the container, and `docker compose start` to start it again.
+
+**DO NOT** use `docker compose up` nor `docker compose down`, as they will delete all filesystem
+data, including the license.
+
 ## Automated installation
 
 To install run the following command in a terminal of your choice:
