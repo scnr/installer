@@ -21,7 +21,7 @@ docker compose up -d --build # Start the services.
 docker exec -it codename-scnr-app-1 bash # Connect to the container.
 
 # From within the container:
-./install.sh # Install Codename SCNR over the network.
+./setup.sh # Install Codename SCNR over the network.
 ```
 _In some Linux distributions, you may need to preface the `docker` commands with `sudo`._
 
@@ -34,7 +34,7 @@ For more information please consult the [documentation](https://documentation.ec
 
 ### Updating
 
-You can run `./install.sh` when a new version is released to install it automatically.
+You can run `./setup.sh` when a new version is released to install it automatically.
 
 ### Caution!
 

@@ -9,9 +9,9 @@ USER codename-scnr
 WORKDIR /home/codename-scnr
 
 RUN mkdir .scnr
-RUN echo '#!/usr/bin/env bash' > ./install.sh
-RUN echo 'bash -c "$(curl -sSL https://get.ecsypno.com/scnr)" _ docker' >> ./install.sh
-RUN chmod +x ./install.sh
+RUN echo '#!/usr/bin/env bash' > ./setup.sh
+RUN echo 'bash -c "$(curl -sSL https://get.ecsypno.com/scnr)" _ docker' >> ./setup.sh
+RUN chmod +x ./setup.sh
 
 USER root
 
