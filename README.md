@@ -10,8 +10,8 @@ Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename
 ## Docker installation
 
 Prerequisites:
-* [Docker](https://www.docker.com/) >= v27.2.0
-* [Docker Compose](https://docs.docker.com/compose/) >= v2.29.2
+* [Docker](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
 
 ```bash
 git clone https://github.com/scnr/installer.git codename-scnr-installer
