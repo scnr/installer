@@ -10,7 +10,7 @@ WORKDIR /home/codename-scnr
 
 RUN mkdir .scnr
 RUN echo '#!/usr/bin/env bash' > ./setup.sh
-RUN echo 'bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/refs/heads/main/install.sh" _ docker' >> ./setup.sh
+RUN echo 'bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/refs/heads/main/install.sh)" _ docker' >> ./setup.sh
 RUN chmod +x ./setup.sh
 
 USER root
