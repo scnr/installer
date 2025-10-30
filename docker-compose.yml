@@ -7,9 +7,6 @@ services:
     working_dir: /home/codename-scnr
     stdin_open: true # docker run -i
     tty: true        # docker run -t
-    volumes:  
-      - "/etc/localtime:/etc/localtime:ro"
-      - "/etc/timezone:/etc/timezone:ro"
     ports:
       - 9292:9292 # Pro WebUI.
       - 7331:7331 # Free.

@@ -10,7 +10,6 @@ Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename
 ## Docker installation
 
 Prerequisites:
-* [Docker](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/)
 
 ```bash
@@ -48,7 +47,7 @@ data, including the license.
 To install run the following command in a terminal of your choice:
 
 ```bash
-bash -c "$(curl -sSL https://get.ecsypno.com/scnr)"
+bash -c "$(curl -sSL https://raw.githubusercontent.com/scnr/installer/refs/heads/main/install.sh)"
 ```
 
 You can now run Codename SCNR by using the executables under the `scnr-v*/bin` directory.
