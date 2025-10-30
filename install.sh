@@ -356,7 +356,6 @@ scnr_url="https://github.com/scnr/installer/releases/download/v$latest_version/s
 scnr_dir="./scnr-v$latest_version"
 scnr_package="./scnr-v$latest_version.tar.gz"
 scnr_db_config="$scnr_dir/.system/scnr-ui-pro/config/database.yml"
-scnr_license_file="$HOME/.scnr/license.key"
 log=./scnr.install.log
 
 echo
@@ -372,22 +371,6 @@ rm $scnr_package
 echo "done."
 
 mkdir -p $HOME/.scnr/pro/config/
-
-if ! [ -f $scnr_license_file ]; then
-    echo
-    echo "Codename SCNR activation"
-    echo "(If you don't have a license key, get one from https://ecsypno.com -- free Community and Trial editions are available too.)"
-    key=""
-    read -p "License key: " key
-    $scnr_dir/bin/scnr_activate $key
-
-    if [[ $? != 0 ]]; then
-        echo "Activation was unsuccessful, please retry the installation process with a valid license key."
-        exit 1
-    fi
-
-    echo
-fi
 
 db_config="$HOME/.scnr/pro/config/database.yml"
 if [[ "$1" == "docker" ]]; then
@@ -421,20 +404,16 @@ else
 
 fi
 
-scnr_edition=`$scnr_dir/bin/scnr_edition`
-
-if [[ $scnr_edition == "dev" || $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
-    if [ "$update" = true ]; then
-        echo -n "   * Updating the DB..."
-        $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
-        handle_failure
-    else
-        echo -n "   * Setting up the DB..."
-        $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
-        handle_failure
-    fi
-    echo "done."
+if [ "$update" = true ]; then
+    echo -n "   * Updating the DB..."
+    $scnr_dir/bin/scnr_pro_task db:migrate 2>> $log 1>> $log
+    handle_failure
+else
+    echo -n "   * Setting up the DB..."
+    $scnr_dir/bin/scnr_pro_task db:create db:migrate db:seed 2>> $log 1>> $log
+    handle_failure
 fi
+echo "done."
 
 echo
 echo
@@ -444,12 +423,10 @@ echo "Installation log at: $log"
 echo
 echo "* For a CLI scan you can run: $scnr_dir/bin/scnr URL"
 
-if [[ $scnr_edition == "trial" || $scnr_edition == "pro" || $scnr_edition == "enterprise" ]]; then
-  echo "* To use Codename SCNR Pro you can run: $scnr_dir/bin/scnr_pro"
+echo "* To use Codename SCNR Pro you can run: $scnr_dir/bin/scnr_pro"
 
-  if [[ "$1" != "docker" ]]; then
-    echo "  * For a better experience please setup PostreSQL: https://github.com/scnr/installer#postgresql"
-  fi
+if [[ "$1" != "docker" ]]; then
+  echo "  * For a better experience please setup PostreSQL: https://github.com/scnr/installer#postgresql"
 fi
 
 echo
