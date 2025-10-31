@@ -40,7 +40,7 @@ You can run `./setup.sh` when a new version is released to install it automatica
 Use `docker compose stop` to stop the container, and `docker compose start` to start it again.
 
 **DO NOT** use `docker compose up` nor `docker compose down`, as they will delete all filesystem
-data, including the license.
+data.
 
 ## Automated installation
 
