@@ -17,6 +17,8 @@ git clone https://github.com/scnr/installer.git codename-scnr-installer
 cd codename-scnr-installer
 
 docker-compose up -d --build # Start the services.
+# "docker compose" without the dash is also supported.
+
 docker exec -it codename-scnr-app-1 bash # Connect to the container.
 
 # From within the container:
