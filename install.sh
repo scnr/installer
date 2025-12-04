@@ -351,6 +351,8 @@ done
 
 print_eula
 
+export INSTALLING=true
+
 latest_version=`curl -sL https://raw.githubusercontent.com/scnr/version/main/LATEST | tr -d "\r\n"`
 scnr_url="https://github.com/scnr/installer/releases/download/v$latest_version/scnr-v$latest_version-$(operating_system)-$(architecture).tar.gz"
 scnr_dir="./scnr-v$latest_version"
@@ -382,7 +384,7 @@ if [[ "$1" == "docker" ]]; then
   rm -f $scnr_dir/.system/scnr-ui-pro/config/database.yml
   ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/database.yml
 
-  INSTALLING=true scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts begin; User.count; rescue =>e; 0; end' 2>> /dev/null`
+  scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts begin; User.count; rescue =>e; 0; end' 2>> /dev/null`
   if [[ "$scnr_pro_user" == "1" ]]; then
       update=true
   else
