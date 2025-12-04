@@ -351,8 +351,6 @@ done
 
 print_eula
 
-export INSTALLING=true
-
 latest_version=`curl -sL https://raw.githubusercontent.com/scnr/version/main/LATEST | tr -d "\r\n"`
 scnr_url="https://github.com/scnr/installer/releases/download/v$latest_version/scnr-v$latest_version-$(operating_system)-$(architecture).tar.gz"
 scnr_dir="./scnr-v$latest_version"
