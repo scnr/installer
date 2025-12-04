@@ -382,7 +382,7 @@ if [[ "$1" == "docker" ]]; then
   rm -f $scnr_dir/.system/scnr-ui-pro/config/database.yml
   ln -s $HOME/.scnr/pro/config/database.yml $scnr_dir/.system/scnr-ui-pro/config/database.yml
 
-  scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts begin; User.count; rescue =>e; 0; end' 2>> /dev/null`
+  INSTALLING=true scnr_pro_user=`$scnr_dir/bin/scnr_pro_script 'puts begin; User.count; rescue =>e; 0; end' 2>> /dev/null`
   if [[ "$scnr_pro_user" == "1" ]]; then
       update=true
   else
