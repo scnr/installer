@@ -8,7 +8,7 @@ services:
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     ports:
-      - 9292:9292 # Pro WebUI.
+      - 9191:9191 # Pro WebUI.
       - 7331:7331 # Free.
       - 7332:7332 # Free.
       - 7333:7333 # Free.
