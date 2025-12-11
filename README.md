@@ -96,8 +96,6 @@ From the Codename SCNR package directory:
 
 1. Download the [latest package](https://github.com/scnr/installer/releases).
 2. Extract.
-3. Run `bin/scnr_activate KEY` to activate your installation -- if you haven't already done so for a previous release.
-   1. [Acquire a license activation key](https://ecsypno.com/)  -- if you haven't already done so for a previous release.
 
 You can now run Codename SCNR by using the executables under the `bin/` directory.
 
