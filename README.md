@@ -1,3 +1,7 @@
+# Moved to https://github.com/ecsypno/velox-scan
+
+
+
 # Codename SCNR Installer
 
 Installation instructions for [Codename SCNR](https://ecsypno.com/pages/codename-scnr):
