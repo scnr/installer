@@ -1,4 +1,4 @@
-# Moved to https://github.com/ecsypno/velox-scan
+# Moved to https://github.com/ecsypno/spectre-scan
 
 
 
